@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- 
+
+    本文件知识点：
+
+        mouseover和mouseout
+            这一组搭配使用，因为它们有一个共同特点：不管是被选元素，还是它的子元素如果触发了事件，都会调用方法
+
+        mouseenter和mouseleave
+            这一组搭配使用，只有当被选元素触发事件才会调用方法
+
+
+ -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        body {
+
+            background-color: black;
+        }
+
+        ul {
+            width: 640px;
+            height: 394px;
+            margin: 100px auto;
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            width: 200px;
+            height: 186px;
+            float: left;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            opacity: .5;
+        }
+    </style>
+
+    <script src='lib/jquery-1.12.4.min.js'></script>
+
+    <script>
+        $(function () {
+
+            $('li').mouseover(function () {
+
+                // 找到所有的兄弟元素
+                $(this).siblings().css('opacity', .5);
+                $(this).css('opacity', '1');
+            })
+
+            // 当移出ul的时候，应该让所有的li标签恢复成半透明状态
+            // 因为存在事件冒泡，就是子元素li标签如果触发鼠标移出，那么它如果没有绑定鼠标移出的方法，会冒泡到父元素来调用父元素的方法
+            // $('ul').mouseout(function () {
+
+            //     $('li').css('opacity', .5);
+            // })
+
+            // mouseleave这个事件没有冒泡
+            // 这就代表只有ul鼠标移出，才会触发，它里面的子元素离开并不会触发
+            $('ul').mouseleave(function () {
+
+                $('li').css('opacity', .5);
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <ul>
+        <li><a href="#"><img src="img/01.jpg" alt=""></a></li>
+        <li><a href="#"><img src="img/02.jpg" alt=""></a></li>
+        <li><a href="#"><img src="img/03.jpg" alt=""></a></li>
+        <li><a href="#"><img src="img/04.jpg" alt=""></a></li>
+        <li><a href="#"><img src="img/05.jpg" alt=""></a></li>
+        <li><a href="#"><img src="img/06.jpg" alt=""></a></li>
+    </ul>
+</body>
+
+</html>
